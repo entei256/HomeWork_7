@@ -23,7 +23,6 @@ namespace HomeWork_7
         public MainWindow()
         {
             InitializeComponent();
-            LoadButton.Background = Brushes.Gray;
         }
     }
 }

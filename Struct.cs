@@ -9,25 +9,24 @@ namespace HomeWork_7
     {
         struct Note
         {
+            public int NumberNote { get; set; }
             public string Header { get; set; }
             public string Text { get; set; }
             public TimeSpan Time { get; set; }
-            public DateTime NoteDate { get; set; }
-            public int RepiteNote_id { get; set; }
-            public int Flag { get; set; }
-
+            public DateTime DateNote { get; set; }
+            public Repite RepiteNote { get; set; }
+            public Flags FlagNote { get; set; }
+            public Priority PriorityNote { get; set; }
         }
 
         struct Repite
         {
-            static public int Id { get; set; }
             public string Name { get; set; }
             public TimeSpan RepetitionPeriod { get; set; }
         }
 
-        struct FlagNote
+        struct Flags
         {
-            static public int id { get; set; }
             public string Name { get; set; }
             public ImageBrush Image { get; set; }
         }
@@ -35,7 +34,6 @@ namespace HomeWork_7
 
         struct Priority
         {
-            static public int id { get; set; }
             public int Name { get; set; }
             public Brushes Color { get; set; }
         }
