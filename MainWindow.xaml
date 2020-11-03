@@ -6,9 +6,58 @@
         xmlns:local="clr-namespace:HomeWork_7"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
-        <Button x:Name="LoadButton" Content="Load" HorizontalAlignment="Right" Margin="0,0,760,404" VerticalAlignment="Bottom"/>
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,0,726,404" VerticalAlignment="Bottom"/>
-        <Button x:Name="ImportButton" Content="Import" HorizontalAlignment="Left" Margin="79,10,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="387*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,3,3,3">
+                <DockPanel>
+                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\OpenFile.png" Width="25"/>
+                </DockPanel>
+            </Button>
+            <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="36,0,0,0" HorizontalAlignment="Left" Width="29">
+                <DockPanel>
+                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\SaveFile.png" Width="25"/>
+                </DockPanel>
+            </Button>
+            <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="70,3,3,3">
+                <DockPanel>
+                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\ImportFile.png" Width="25"/>
+                </DockPanel>
+            </Button>
+            <Button x:Name="ImportButton_Copy" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="104,0,0,0">
+                <DockPanel>
+                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\Filter.png" Width="25"/>
+                </DockPanel>
+            </Button>
+        <Button x:Name="ImportButton_Copy1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="138,0,0,0" ToolTip="Фильтр диапозона дат.">
+            <DockPanel>
+                <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\Calendar.png" Width="25"/>
+            </DockPanel>
+        </Button>
+
+        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Margin="1,1,1,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300*"/>
+                    <ColumnDefinition Width="400*"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderThickness="1" Margin="1,1,1,1">
+                    <ListView x:Name="NotesListView" Margin="5,5,5,5">
+                        
+                    </ListView>
+                </Border>
+                <Border BorderThickness="1" Margin="1,1,1,1" Grid.Column="1">
+                    <ListView x:Name="NotesListView1" Margin="5,5,5,5">
+
+                    </ListView>
+                </Border>
+
+            </Grid>
+        </Border>
+        
+        
     </Grid>
 </Window>
