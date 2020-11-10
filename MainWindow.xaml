@@ -5,54 +5,130 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HomeWork_7"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-
+        Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="600">
+    <!--Заготовка для пробы MVVM-->
+    <Window.DataContext>
+        <local:DataCore/>
+    </Window.DataContext>
+    
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="387*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,3,3,3">
-                <DockPanel>
-                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\OpenFile.png" Width="25"/>
-                </DockPanel>
-            </Button>
-            <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="36,0,0,0" HorizontalAlignment="Left" Width="29">
-                <DockPanel>
-                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\SaveFile.png" Width="25"/>
-                </DockPanel>
-            </Button>
-            <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="70,3,3,3">
-                <DockPanel>
-                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\ImportFile.png" Width="25"/>
-                </DockPanel>
-            </Button>
-            <Button x:Name="ImportButton_Copy" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="104,0,0,0">
-                <DockPanel>
-                    <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\Filter.png" Width="25"/>
-                </DockPanel>
-            </Button>
-        <Button x:Name="ImportButton_Copy1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="138,0,0,0" ToolTip="Фильтр диапозона дат.">
+        <StackPanel Orientation="Horizontal">
+        <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" Command="" ToolTip="Открыть">
             <DockPanel>
-                <Image Source="D:\Учеба\Модуль 7\HomeWork_7\Resourse\PNG\Calendar.png" Width="25"/>
+                    <Image Source="./Resourse/PNG/OpenFile.png" Width="25"/>
             </DockPanel>
         </Button>
-
+        <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left" Width="29" ToolTip="Сохранить">
+                <DockPanel>
+                    <Image Source="./Resourse/PNG/SaveFile.png" Width="25"/>
+                </DockPanel>
+            </Button>
+        <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Импорт.">
+                <DockPanel>
+                    <Image Source="./Resourse/PNG/ImportFile.png" Width="25"/>
+                </DockPanel>
+            </Button>
+        <Button x:Name="ImportButton_Copy" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
+                <DockPanel>
+                    <Image Source="./Resourse/PNG/Filter.png" Width="25" ToolTip="Фильтры по полям."/>
+                </DockPanel>
+            </Button>
+        <Button x:Name="ImportButton_Copy1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" ToolTip="Фильтр диапозона дат.">
+            <DockPanel>
+                    <Image Source="./Resourse/PNG/Calendar.png" Width="25"/>
+            </DockPanel>
+        </Button>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Добавить заметку.">
+                <DockPanel>
+                    <Image Source="./Resourse/PNG/Add.png" Width="25"/>
+                </DockPanel>
+            </Button>
+            <Button x:Name="DeleteButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Удалить заметку">
+                <DockPanel>
+                    <Image Source="./Resourse/PNG/Delete.png" Width="25"/>
+                </DockPanel>
+            </Button>
+        </StackPanel>
+        
         <Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Margin="1,1,1,1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="300*"/>
                     <ColumnDefinition Width="400*"/>
                 </Grid.ColumnDefinitions>
-                <Border BorderThickness="1" Margin="1,1,1,1">
-                    <ListView x:Name="NotesListView" Margin="5,5,5,5">
-                        
-                    </ListView>
+                <Border BorderThickness="1" Margin="1,1,1,1" >
+                    <ListBox x:Name="NotesListView" Margin="5,5,5,5" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}" HorizontalAlignment="Stretch">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
+                                        <TextBlock Text="{Binding Header}" Margin="3"/>
+                                    </Border>
+                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="20">
+                                        <Image Source="{Binding FlagNote.Image}" Height="15" Width="15" Margin="3"/>
+                                    </Border>
+                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="20">
+                                        <Image Source="{Binding PriorityNote.Image}" Height="15" Width="15" Margin="3" />
+                                    </Border>
+                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
+                                        <TextBlock Text="{Binding DateNote, StringFormat=dd.MM.yy}" Margin="3"/>
+                                    </Border>
+                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
+                                        <TextBlock Text="{Binding Duration, StringFormat=mm}" Margin="3"/>
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Border>
-                <Border BorderThickness="1" Margin="1,1,1,1" Grid.Column="1">
-                    <ListView x:Name="NotesListView1" Margin="5,5,5,5">
+                <Border BorderThickness="1" Margin="6,6,6,6" Grid.Column="1" BorderBrush="Gray">
+                    <Grid DataContext="{Binding SelectedNote}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="75*"/>
+                            <RowDefinition Height="10*"/>
+                        </Grid.RowDefinitions>
+                        <GroupBox Header="Название заметки" Width="Auto" Grid.Row="0" Margin="10,5,0,5" HorizontalAlignment="Left" BorderThickness="0">
+                            <TextBox Text="{Binding Header , UpdateSourceTrigger=PropertyChanged}" MinWidth="150" BorderThickness="0"/>
+                        </GroupBox>
+                        <Grid Grid.Row="0" HorizontalAlignment="Right" Width="Auto" Height="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox Margin="5" Header="Группа" BorderThickness="1" Grid.Column="0">
+                                <Image Source="{Binding FlagNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25"/>
+                            </GroupBox>
+                            <GroupBox Margin="5" Header="Приоритет" BorderThickness="1" Grid.Column="1">
+                                <Image Source="{Binding PriorityNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25"/>
+                            </GroupBox>
+                        </Grid>
 
-                    </ListView>
+                        <GroupBox Header="Текст заметки" Grid.Row="1">
+                            <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
+                        </GroupBox>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="60"/>
+                            </Grid.ColumnDefinitions>
+                            <DatePicker Name="StartDatePiker" SelectedDate="{Binding DateNote}" Grid.Column="0"/>
+                            <GroupBox Header="Продолжительность" FontSize="8" Grid.Column="1">
+                                <TextBox  Grid.Column="1" Text="{Binding Duration}"/>
+                            </GroupBox>
+                            <Button x:Name="Save" Content="Сохранить" Grid.Column="2" FontSize="10"/>
+                        </Grid>
+                    </Grid>
                 </Border>
 
             </Grid>
