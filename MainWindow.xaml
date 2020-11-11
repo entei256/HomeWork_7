@@ -20,27 +20,27 @@
         <StackPanel Orientation="Horizontal">
         <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" Command="" ToolTip="Открыть">
             <DockPanel>
-                    <Image Source="./Resourse/PNG/OpenFile.png" Width="25"/>
+                    <Image Source="/Resourse/OpenFile.png" Width="25"/>
             </DockPanel>
         </Button>
         <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left" Width="29" ToolTip="Сохранить">
                 <DockPanel>
-                    <Image Source="./Resourse/PNG/SaveFile.png" Width="25"/>
+                    <Image Source="/Resourse/SaveFile.png" Width="25" Stretch="Fill"/>
                 </DockPanel>
             </Button>
         <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Импорт.">
                 <DockPanel>
-                    <Image Source="./Resourse/PNG/ImportFile.png" Width="25"/>
+                    <Image Source="/Resourse/ImportFile.png" Width="25"/>
                 </DockPanel>
             </Button>
         <Button x:Name="ImportButton_Copy" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
                 <DockPanel>
-                    <Image Source="./Resourse/PNG/Filter.png" Width="25" ToolTip="Фильтры по полям."/>
+                    <Image Source="/Resourse/Filter.png" Width="25" ToolTip="Фильтры по полям."/>
                 </DockPanel>
             </Button>
         <Button x:Name="ImportButton_Copy1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" ToolTip="Фильтр диапозона дат.">
             <DockPanel>
-                    <Image Source="./Resourse/PNG/Calendar.png" Width="25"/>
+                    <Image Source="/Resourse/Calendar.png" Width="25"/>
             </DockPanel>
         </Button>
         </StackPanel>
@@ -48,12 +48,12 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Добавить заметку.">
                 <DockPanel>
-                    <Image Source="./Resourse/PNG/Add.png" Width="25"/>
+                    <Image Source="/Resourse/Add.png" Width="25"/>
                 </DockPanel>
             </Button>
             <Button x:Name="DeleteButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Удалить заметку">
                 <DockPanel>
-                    <Image Source="./Resourse/PNG/Delete.png" Width="25"/>
+                    <Image Width="25" Source="/Resourse/Delete.png"/>
                 </DockPanel>
             </Button>
         </StackPanel>
@@ -68,23 +68,25 @@
                     <ListBox x:Name="NotesListView" Margin="5,5,5,5" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}" HorizontalAlignment="Stretch">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
-                                        <TextBlock Text="{Binding Header}" Margin="3"/>
-                                    </Border>
-                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="20">
-                                        <Image Source="{Binding FlagNote.Image}" Height="15" Width="15" Margin="3"/>
-                                    </Border>
-                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="20">
-                                        <Image Source="{Binding PriorityNote.Image}" Height="15" Width="15" Margin="3" />
-                                    </Border>
-                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
-                                        <TextBlock Text="{Binding DateNote, StringFormat=dd.MM.yy}" Margin="3"/>
-                                    </Border>
-                                    <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
-                                        <TextBlock Text="{Binding Duration, StringFormat=mm}" Margin="3"/>
-                                    </Border>
-                                </StackPanel>
+                                <DockPanel Margin="5" Background="{Binding PriorityNote.Color}" HorizontalAlignment="Stretch">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
+                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
+                                            <TextBlock Text="{Binding Header}" Margin="3"/>
+                                        </Border>
+                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="20" >
+                                            <Image Source="{Binding FlagNote.Image}" Height="15" Width="15" Margin="3"/>
+                                        </Border>
+                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="20">
+                                            <Image Source="{Binding PriorityNote.Image}" Height="15" Width="15" Margin="3" />
+                                        </Border>
+                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
+                                            <TextBlock Text="{Binding DateNote, StringFormat=dd.MM.yy}" Margin="3"/>
+                                        </Border>
+                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
+                                            <TextBlock Text="{Binding Duration, StringFormat=mm}" Margin="3"/>
+                                        </Border>
+                                    </StackPanel>
+                                </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

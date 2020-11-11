@@ -175,17 +175,17 @@ namespace HomeWork_7
                     switch (value)
                     {
                         case EFlag.Работа:
-                            Image = BitmapFrame.Create(new Uri("./Resourse/PNG/job_flag.png", UriKind.Relative));
+                            Image = BitmapFrame.Create(new Uri("./Resourse/job_flag.png", UriKind.Relative));
                             break;
                         case EFlag.Личные:
-                            Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Home_flag.png", UriKind.Relative));
+                            Image = BitmapFrame.Create(new Uri("./Resourse/Home_flag.png", UriKind.Relative));
                             break;
                         case EFlag.Избранные:
-                            Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Favorite_flag.png", UriKind.Relative));
+                            Image = BitmapFrame.Create(new Uri("./Resourse/Favorite_flag.png", UriKind.Relative));
                             break;
                         default:
                             new ArgumentOutOfRangeException();
-                            Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Cros.png", UriKind.Relative));
+                            Image = BitmapFrame.Create(new Uri("./Resourse/Cros.png", UriKind.Relative));
                             break;
                     }
                 } 
@@ -194,7 +194,7 @@ namespace HomeWork_7
             //Основной конструктор.
             public Flags(EFlag eFlag)
             {
-                Image = BitmapFrame.Create(new Uri(@"./Resourse/PNG/Cros.png", UriKind.Relative)) ;
+                Image = BitmapFrame.Create(new Uri(@"./Resourse/Cros.png", UriKind.Relative)) ;
                 this._Name = eFlag;
             }
         }
@@ -214,20 +214,20 @@ namespace HomeWork_7
                     {
                         case EPriority.Высокий:
                             this.Color = Brushes.OrangeRed;
-                            this.Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Hight_Priority.png", UriKind.Relative));
+                            this.Image = BitmapFrame.Create(new Uri("./Resourse/Hight_Priority.png", UriKind.Relative));
                             break;
                         case EPriority.Низкий:
                             this.Color = Brushes.Aqua;
-                            this.Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Hight_Priority.png", UriKind.Relative));
+                            this.Image = BitmapFrame.Create(new Uri("./Resourse/Hight_Priority.png", UriKind.Relative));
                             break;
                         case EPriority.Средний:
                             this.Color = Brushes.Orange;
-                            this.Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Hight_Priority.png", UriKind.Relative));
+                            this.Image = BitmapFrame.Create(new Uri("./Resourse/Hight_Priority.png", UriKind.Relative));
                             break;
                         default:
                             new ArgumentOutOfRangeException();
                             this.Color = Brushes.White;
-                            this.Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Cros.png", UriKind.Relative));
+                            this.Image = BitmapFrame.Create(new Uri("./Resourse/Cros.png", UriKind.Relative));
                             break;
                     }
                 }
@@ -238,7 +238,7 @@ namespace HomeWork_7
             public Priority(EPriority ePriority)
             {
                 this.Color = Brushes.White;
-                this.Image = BitmapFrame.Create(new Uri("./Resourse/PNG/Cros.png",UriKind.Relative));
+                this.Image = BitmapFrame.Create(new Uri("./Resourse/Cros.png",UriKind.Relative));
                 this._Name = ePriority;
             }
 
