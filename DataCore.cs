@@ -9,14 +9,17 @@ using SNote = HomeWork_7.Struct.Note;
 
 namespace HomeWork_7
 {
+    /// <summary>
+    /// Здесь вся манипуляция данными в форме.
+    /// </summary>
     class DataCore : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;  //Проперти событий для MVVM
 
-        private SNote _SelectedNote;  //Будем записывать выделенный элемент(Точнее помещать ссылку на него)
+        private SNote _SelectedNote;  //Будем записывать выделенный элемент
         public ObservableCollection<SNote> Notes { get; set; }
 
-        //Метод определения выделенного элемента.
+        //Метод определения выделенной заметки.
         public SNote SelectedNote
         {
             get { return _SelectedNote; }
@@ -24,9 +27,31 @@ namespace HomeWork_7
             {
                 _SelectedNote = value;
                 OnPropertyChanged("SelectedNote");
+
+                
             }
         }
 
+
+
+
+
+
+
+
+
+
+        public ERepite SelectedRepite
+        {
+            get { return _SelectedNote.RepiteNote.Name; }
+            set
+            {
+                _SelectedNote.RepiteNote = new Repite(value);
+                OnPropertyChanged("SelectedNote");
+
+
+            }
+        }
 
 
         /// <summary>

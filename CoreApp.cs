@@ -6,6 +6,9 @@ using System.Text;
 
 namespace HomeWork_7
 {
+    /// <summary>
+    /// Здесь будет вся логика событий из формы.
+    /// </summary>
     class CoreApp
     {
         static void LoadData(ref List<HomeWork_7.Struct.Note> Notes) 

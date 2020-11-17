@@ -12,6 +12,7 @@
     </Window.DataContext>
     
     
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -68,35 +69,42 @@
                     <ListBox x:Name="NotesListView" Margin="5,5,5,5" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}" HorizontalAlignment="Stretch">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <DockPanel Margin="5" Background="{Binding PriorityNote.Color}" HorizontalAlignment="Stretch">
+                                <DockPanel>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
                                         <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
-                                            <TextBlock Text="{Binding Header}" Margin="3"/>
+                                            <TextBlock Text="{Binding Header}" Margin="3" ToolTip="Название заметки"/>
                                         </Border>
-                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="20" >
-                                            <Image Source="{Binding FlagNote.Image}" Height="15" Width="15" Margin="3"/>
+                                        <Border BorderThickness="1" BorderBrush="DarkGray">
+                                            <Image Source="{Binding FlagNote.Image}" Height="25" Width="25" ToolTip="{Binding FlagNote.Name}"/>
                                         </Border>
-                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="20">
-                                            <Image Source="{Binding PriorityNote.Image}" Height="15" Width="15" Margin="3" />
-                                        </Border>
-                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
-                                            <TextBlock Text="{Binding DateNote, StringFormat=dd.MM.yy}" Margin="3"/>
+                                        <Border BorderThickness="1" BorderBrush="DarkGray">
+                                            <Image Source="{Binding PriorityNote.Image}" Height="25" Width="25" ToolTip="{Binding PriorityNote.Name}"/>
                                         </Border>
                                         <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
-                                            <TextBlock Text="{Binding Duration, StringFormat=mm}" Margin="3"/>
+                                            <TextBlock Text="{Binding DateNote, StringFormat=dd.MM.yy}" Margin="3" ToolTip="Дата заметки"/>
+                                        </Border>
+                                        <Border BorderThickness="1" BorderBrush="DarkGray" Width="Auto">
+                                            <TextBlock Text="{Binding Duration, StringFormat=mm}" Margin="3" ToolTip="Длительность(Минуты)"/>
                                         </Border>
                                     </StackPanel>
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="ListBoxItem.Background" Value="{Binding PriorityNote.Color}"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                     </ListBox>
                 </Border>
+                
+                
                 <Border BorderThickness="1" Margin="6,6,6,6" Grid.Column="1" BorderBrush="Gray">
                     <Grid DataContext="{Binding SelectedNote}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
                             <RowDefinition Height="75*"/>
-                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
                         <GroupBox Header="Название заметки" Width="Auto" Grid.Row="0" Margin="10,5,0,5" HorizontalAlignment="Left" BorderThickness="0">
                             <TextBox Text="{Binding Header , UpdateSourceTrigger=PropertyChanged}" MinWidth="150" BorderThickness="0"/>
@@ -107,10 +115,12 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <GroupBox Margin="5" Header="Группа" BorderThickness="1" Grid.Column="0">
-                                <Image Source="{Binding FlagNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25"/>
+                                <Image Source="{Binding FlagNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25" 
+                                       ToolTip="{Binding FlagNote.Name}"/>
                             </GroupBox>
                             <GroupBox Margin="5" Header="Приоритет" BorderThickness="1" Grid.Column="1">
-                                <Image Source="{Binding PriorityNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25"/>
+                                <Image Source="{Binding PriorityNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25" 
+                                       ToolTip="{Binding PriorityNote.Name}"/>
                             </GroupBox>
                         </Grid>
 
@@ -120,15 +130,22 @@
 
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="60"/>
                             </Grid.ColumnDefinitions>
                             <DatePicker Name="StartDatePiker" SelectedDate="{Binding DateNote}" Grid.Column="0"/>
-                            <GroupBox Header="Продолжительность" FontSize="8" Grid.Column="1">
+                            <GroupBox Header="Продолжительность" FontSize="10" Grid.Column="1">
                                 <TextBox  Grid.Column="1" Text="{Binding Duration}"/>
                             </GroupBox>
-                            <Button x:Name="Save" Content="Сохранить" Grid.Column="2" FontSize="10"/>
+                            <DockPanel Grid.Column="2">
+                                <GroupBox Header="Повторрение">
+                                    <ComboBox ItemsSource="{Binding Source={local:EnumExtension {x:Type local:Struct.ERepite}}}" FontSize="9"
+                                              Selected="{Binding SelectedRepite}"/>
+                                </GroupBox>
+                            </DockPanel>
+                            <Button x:Name="Save" Content="Сохранить" Grid.Column="3" FontSize="10"/>
                         </Grid>
                     </Grid>
                 </Border>

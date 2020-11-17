@@ -19,6 +19,7 @@ namespace HomeWork_7
         /// </summary>
         struct Note : INotifyPropertyChanged
         {
+            
             private string _Header;  //Название/заголовок
             private string _Text;  //Текст заметки
             private TimeSpan? _Duration;  //Длительность
@@ -27,7 +28,6 @@ namespace HomeWork_7
             private Flags _FlagNote;  //Группа
             private Priority _PriorityNote;  //Приоритет
 
-            //public int NumberNote { get; private set; }  //Номер заметки
             public string Header 
             { 
                 get { return this._Header; } 
@@ -67,17 +67,17 @@ namespace HomeWork_7
             public event PropertyChangedEventHandler PropertyChanged;  //Событие для паттерна MVVM
 
             //Основной конструктор.
-            public Note(string header, string text, TimeSpan duration, DateTime StartDate , 
+            public Note(string header, string text, TimeSpan duration, DateTime StartDate ,
                 ERepite repite = ERepite.Никогда, EFlag Group = EFlag.Избранные, EPriority priority = EPriority.Низкий)
             {
-                //this.NumberNote = Number;
+                
                 this._Header = header;
                 this._Text = text;
-                this._Duration = duration;
                 this._DateNote = StartDate;
                 this._RepiteNote = new Repite(repite);
                 this._FlagNote = new Flags(Group);
                 this._PriorityNote = new Priority(priority);
+                this._Duration = duration;
                 PropertyChanged = null;
 
                 OnPropertyChanged("Note");
@@ -101,8 +101,8 @@ namespace HomeWork_7
             public ERepite Name 
             {
                 get {return this._Name;}
-                //Пришлось написать сеттер отдельно, т.к. нужно что бы значение обновлялось.
-                set 
+                //Пришлось написать сеттер отдельно, т.к. нужно что бы значение RepetitionPeriod обновлялось.
+                set
                 {
                     this._Name = value;
                     switch (value)
@@ -135,7 +135,7 @@ namespace HomeWork_7
             {
                 this.RepetitionPeriod = TimeSpan.Zero;
                 this._Name = eRepite;
-                /*switch (eRepite)
+                switch (eRepite)
                 {
                     case ERepite.Никогда:
                         this.RepetitionPeriod = TimeSpan.Zero;
@@ -156,7 +156,7 @@ namespace HomeWork_7
                         this.RepetitionPeriod = TimeSpan.Zero;
                         new ArgumentOutOfRangeException();
                         break;
-                }*/
+                }
 
             }
         }
@@ -190,12 +190,27 @@ namespace HomeWork_7
                     }
                 } 
             }
-            public ImageSource Image { get; set; }
+            public ImageSource Image { get; private set; }
             //Основной конструктор.
             public Flags(EFlag eFlag)
             {
-                Image = BitmapFrame.Create(new Uri(@"./Resourse/Cros.png", UriKind.Relative)) ;
                 this._Name = eFlag;
+                switch (eFlag)
+                {
+                    case EFlag.Работа:
+                        Image = BitmapFrame.Create(new Uri("./Resourse/job_flag.png", UriKind.Relative));
+                        break;
+                    case EFlag.Личные:
+                        Image = BitmapFrame.Create(new Uri("./Resourse/Home_flag.png", UriKind.Relative));
+                        break;
+                    case EFlag.Избранные:
+                        Image = BitmapFrame.Create(new Uri("./Resourse/Favorite_flag.png", UriKind.Relative));
+                        break;
+                    default:
+                        new ArgumentOutOfRangeException();
+                        Image = BitmapFrame.Create(new Uri("./Resourse/Cros.png", UriKind.Relative));
+                        break;
+                }
             }
         }
 
@@ -237,9 +252,27 @@ namespace HomeWork_7
 
             public Priority(EPriority ePriority)
             {
-                this.Color = Brushes.White;
-                this.Image = BitmapFrame.Create(new Uri("./Resourse/Cros.png",UriKind.Relative));
                 this._Name = ePriority;
+                switch (ePriority)
+                {
+                    case EPriority.Высокий:
+                        this.Color = Brushes.OrangeRed;
+                        this.Image = BitmapFrame.Create(new Uri("./Resourse/Hight_Priority.png", UriKind.Relative));
+                        break;
+                    case EPriority.Низкий:
+                        this.Color = Brushes.Aqua;
+                        this.Image = BitmapFrame.Create(new Uri("./Resourse/Low_Priority.png", UriKind.Relative));
+                        break;
+                    case EPriority.Средний:
+                        this.Color = Brushes.Orange;
+                        this.Image = BitmapFrame.Create(new Uri("./Resourse/Medium_Priority.png", UriKind.Relative));
+                        break;
+                    default:
+                        new ArgumentOutOfRangeException();
+                        this.Color = Brushes.White;
+                        this.Image = BitmapFrame.Create(new Uri("./Resourse/Cros.png", UriKind.Relative));
+                        break;
+                }
             }
 
         }
@@ -259,7 +292,7 @@ namespace HomeWork_7
             Высокий
         }
         //Список повторений.
-        enum ERepite
+        public enum ERepite
         {
             Никогда = 0,
             Ежедневно,

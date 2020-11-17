@@ -9,63 +9,59 @@
   <ItemGroup>
     <None Remove="Resourse\Add.png" />
     <None Remove="Resourse\Calendar.png" />
-    <None Remove="Resourse\Cros.png" />
     <None Remove="Resourse\Delete.png" />
-    <None Remove="Resourse\Favorite_flag.png" />
     <None Remove="Resourse\Filter.png" />
-    <None Remove="Resourse\Hight_Priority.png" />
-    <None Remove="Resourse\Home_flag.png" />
     <None Remove="Resourse\ImportFile.png" />
-    <None Remove="Resourse\job_flag.png" />
-    <None Remove="Resourse\Low_Priority.png" />
-    <None Remove="Resourse\Medium_Priority.png" />
     <None Remove="Resourse\OpenFile.png" />
     <None Remove="Resourse\SaveFile.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resourse\Add.png">
+    <Resource Include="Resourse\Add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Calendar.png">
+    </Resource>
+    <Resource Include="Resourse\Calendar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Cros.png">
+    </Resource>
+    <Resource Include="Resourse\Delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Delete.png">
+    </Resource>
+    <Resource Include="Resourse\Filter.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Favorite_flag.png">
+    </Resource>
+    <Resource Include="Resourse\ImportFile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Filter.png">
+    </Resource>
+    <Resource Include="Resourse\OpenFile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Hight_Priority.png">
+    </Resource>
+    <Resource Include="Resourse\SaveFile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Home_flag.png">
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resourse\Cros.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\ImportFile.png">
+    </None>
+    <None Update="Resourse\Favorite_flag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\job_flag.png">
+    </None>
+    <None Update="Resourse\Hight_Priority.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Low_Priority.png">
+    </None>
+    <None Update="Resourse\Home_flag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\Medium_Priority.png">
+    </None>
+    <None Update="Resourse\job_flag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\OpenFile.png">
+    </None>
+    <None Update="Resourse\Low_Priority.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourse\SaveFile.png">
+    </None>
+    <None Update="Resourse\Medium_Priority.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
 
 </Project>
