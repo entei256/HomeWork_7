@@ -19,7 +19,8 @@ namespace HomeWork_7
         /// </summary>
         struct Note : INotifyPropertyChanged
         {
-            
+            private static uint OldID =0;
+            private uint _ID;
             private string _Header;  //Название/заголовок
             private string _Text;  //Текст заметки
             private TimeSpan? _Duration;  //Длительность
@@ -28,6 +29,11 @@ namespace HomeWork_7
             private Flags _FlagNote;  //Группа
             private Priority _PriorityNote;  //Приоритет
 
+            public uint ID 
+            {
+                get { return _ID; }
+                private set { _ID = value; }
+            }
             public string Header 
             { 
                 get { return this._Header; } 
@@ -67,10 +73,10 @@ namespace HomeWork_7
             public event PropertyChangedEventHandler PropertyChanged;  //Событие для паттерна MVVM
 
             //Основной конструктор.
-            public Note(string header, string text, TimeSpan duration, DateTime StartDate ,
+            public Note(string header , string text , TimeSpan duration, DateTime StartDate ,
                 ERepite repite = ERepite.Никогда, EFlag Group = EFlag.Избранные, EPriority priority = EPriority.Низкий)
             {
-                
+
                 this._Header = header;
                 this._Text = text;
                 this._DateNote = StartDate;
@@ -79,6 +85,8 @@ namespace HomeWork_7
                 this._PriorityNote = new Priority(priority);
                 this._Duration = duration;
                 PropertyChanged = null;
+                OldID = _ID = OldID + 1;
+
 
                 OnPropertyChanged("Note");
             }

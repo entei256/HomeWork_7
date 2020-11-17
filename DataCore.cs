@@ -5,19 +5,29 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
 using SNote = HomeWork_7.Struct.Note;
 
 namespace HomeWork_7
 {
     /// <summary>
-    /// Здесь вся манипуляция данными в форме.
+    /// Логика аналог. ViewModel
     /// </summary>
     class DataCore : INotifyPropertyChanged
     {
+        private CommandForm _addNote;
+        private CommandForm _removeNote;
+        private CommandForm _filterDate;
+        private CommandForm _openFile;
+        private CommandForm _saveFile;
+        private CommandForm _saveNote;
+
+
         public event PropertyChangedEventHandler PropertyChanged;  //Проперти событий для MVVM
 
         private SNote _SelectedNote;  //Будем записывать выделенный элемент
-        public ObservableCollection<SNote> Notes { get; set; }
+
+        public ObservableCollection<SNote> Notes { get; set; }  //Коллекция заметок
 
         //Метод определения выделенной заметки.
         public SNote SelectedNote
@@ -27,32 +37,25 @@ namespace HomeWork_7
             {
                 _SelectedNote = value;
                 OnPropertyChanged("SelectedNote");
-
-                
             }
         }
 
-
-
-
-
-
-
-
-
-
-        public ERepite SelectedRepite
+        //Добавить заметку. Команда.
+        public CommandForm AddNote
         {
-            get { return _SelectedNote.RepiteNote.Name; }
-            set
+            get
             {
-                _SelectedNote.RepiteNote = new Repite(value);
-                OnPropertyChanged("SelectedNote");
-
-
+                return _addNote ?? (_addNote = new CommandForm(obj => { addNote(); })); //Возврращаем либо null либо метод для выполнения
             }
         }
-
+        //Удалить заметку. Команда.
+        public CommandForm RemoveNote
+        {
+            get
+            {
+                return _removeNote ?? (_removeNote = new CommandForm(obj => { removeNote(); })); //Возврращаем либо null либо метод для выполнения
+            }
+        }
 
         /// <summary>
         /// Тестовые данные.
@@ -73,6 +76,35 @@ namespace HomeWork_7
                 new SNote("Десятая заметка","Какой-то текст 10",TimeSpan.FromMinutes(30),DateTime.Now)
             };
         }
+
+
+
+        //Метод добовления заметки.
+        private void addNote()
+        {
+            Notes.Add(new SNote("Введите название заметки", "Описание заметки", TimeSpan.FromMinutes(30), DateTime.Now)); ///костыль т.к. видать не очень хорошо продумал модель данных. Да и чеез стуктуы станно это делать.
+        }
+
+        //Удаление заметки. 
+        private void removeNote()
+        {
+            //Я не знаю какого не работает Notes.Remove(SelectedNote); так то костылим.
+            foreach (var note in Notes)
+            {
+                if (note.ID == SelectedNote.ID)
+                {
+                    Notes.Remove(note);
+                    break;
+                }
+            }
+        }
+
+        private void openFile()
+        {
+
+        }
+
+
 
 
 

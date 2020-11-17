@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HomeWork_7"
+        xmlns:Str="clr-namespace:HomeWork_7.Struct"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="600">
-    <!--Заготовка для пробы MVVM-->
+        Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="600" WindowStyle="SingleBorderWindow">
+    <!--Контекст для пробы MVVM-->
     <Window.DataContext>
         <local:DataCore/>
     </Window.DataContext>
@@ -47,12 +48,14 @@
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Добавить заметку.">
+            <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Добавить заметку."
+                     Command="{Binding AddNote}">
                 <DockPanel>
                     <Image Source="/Resourse/Add.png" Width="25"/>
                 </DockPanel>
             </Button>
-            <Button x:Name="DeleteButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Удалить заметку">
+            <Button x:Name="DeleteButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Удалить заметку" 
+                    Command="{Binding ElementName=NotesListView, Path=DataContext.RemoveNote}">
                 <DockPanel>
                     <Image Width="25" Source="/Resourse/Delete.png"/>
                 </DockPanel>
@@ -140,12 +143,11 @@
                                 <TextBox  Grid.Column="1" Text="{Binding Duration}"/>
                             </GroupBox>
                             <DockPanel Grid.Column="2">
-                                <GroupBox Header="Повторрение">
-                                    <ComboBox ItemsSource="{Binding Source={local:EnumExtension {x:Type local:Struct.ERepite}}}" FontSize="9"
-                                              Selected="{Binding SelectedRepite}"/>
+                                <GroupBox Header="Повторение">
+                                    <ComboBox ItemsSource="{Binding Source={local:EnumExtension {x:Type Str:ERepite}}}" FontSize="9" SelectedItem="{Binding RepiteNote.Name}"/>
                                 </GroupBox>
                             </DockPanel>
-                            <Button x:Name="Save" Content="Сохранить" Grid.Column="3" FontSize="10"/>
+                            <Button x:Name="Save" Content="Сохранить" Grid.Column="3" FontSize="10" Command="{Binding SaveNoteCommand}"/>
                         </Grid>
                     </Grid>
                 </Border>

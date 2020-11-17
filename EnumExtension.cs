@@ -26,9 +26,4 @@ namespace HomeWork_7
         }
 
     }
-
-    namespace myName
-    {
-        enum MyEnum { one, two, three }
-    }
 }
