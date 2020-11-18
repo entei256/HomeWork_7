@@ -119,7 +119,11 @@
                             </Grid.ColumnDefinitions>
                             <GroupBox Margin="5" Header="Группа" BorderThickness="1" Grid.Column="0">
                                 <Image Source="{Binding FlagNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25" 
-                                       ToolTip="{Binding FlagNote.Name}"/>
+                                       ToolTip="{Binding FlagNote.Name}">
+                                    <Image.ContextMenu>
+                                        <ContextMenu ItemsSource="{Binding Source={local:EnumExtension {x:Type Str:ERepite}}}" />
+                                    </Image.ContextMenu>
+                                </Image>
                             </GroupBox>
                             <GroupBox Margin="5" Header="Приоритет" BorderThickness="1" Grid.Column="1">
                                 <Image Source="{Binding PriorityNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25" 

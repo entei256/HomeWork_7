@@ -97,6 +97,7 @@ namespace HomeWork_7
                     break;
                 }
             }
+            SelectedNote = new SNote();
         }
 
         private void openFile()
