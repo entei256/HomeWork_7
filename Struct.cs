@@ -23,8 +23,8 @@ namespace HomeWork_7
             private uint _ID;
             private string _Header;  //Название/заголовок
             private string _Text;  //Текст заметки
-            private TimeSpan? _Duration;  //Длительность
-            private DateTime? _DateNote;  //Дата начала
+            private TimeSpan _Duration;  //Длительность
+            private DateTime _DateNote;  //Дата начала
             private Repite _RepiteNote; //Дата повторения
             private Flags _FlagNote;  //Группа
             private Priority _PriorityNote;  //Приоритет
@@ -44,12 +44,12 @@ namespace HomeWork_7
                 get { return this._Text; } 
                 set { this._Text = value; OnPropertyChanged("Text"); } 
             }  //Текст заметки
-            public TimeSpan? Duration 
+            public TimeSpan Duration 
             { 
                 get { return this._Duration; } 
                 set { this._Duration = value; OnPropertyChanged("Duration"); } 
             }  //Длительность
-            public DateTime? DateNote 
+            public DateTime DateNote 
             { 
                 get { return this._DateNote; } 
                 set { this._DateNote = value; OnPropertyChanged("Date"); } 
@@ -91,9 +91,38 @@ namespace HomeWork_7
                 OnPropertyChanged("Note");
             }
 
-            
-            
-            
+            //Костыль, констукто чисто для загррузки из файла.
+            /*public Note(string header, string text, TimeSpan duration, DateTime StartDate,
+                string repite = "Никогда", string Group = "Избранные", string priority = "Низкий")
+            {
+
+                this._Header = header;
+                this._Text = text;
+                this._DateNote = StartDate;
+                this._Duration = duration;
+
+
+                var thisRepite = (ERepite)Enum.Parse(typeof(ERepite), repite, true);
+                this._RepiteNote = new Repite(thisRepite);
+
+                var thisFlag = (EFlag)Enum.Parse(typeof(EFlag), repite, true);
+                this._FlagNote = new Flags(thisFlag);
+
+                var thisPriority = (EPriority)Enum.Parse(typeof(EPriority), repite, true);
+                this._PriorityNote = new Priority(thisPriority);
+                
+
+
+                PropertyChanged = null;
+                OldID = _ID = OldID + 1;
+
+
+                OnPropertyChanged("Note");
+            }*/
+
+
+
+
             //Честно скопированный из инета код. Надо разобраться как он работает.
             public void OnPropertyChanged([CallerMemberName] string prop = "")  
             {

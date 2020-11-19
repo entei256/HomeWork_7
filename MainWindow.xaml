@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HomeWork_7"
         xmlns:Str="clr-namespace:HomeWork_7.Struct"
+        xmlns:i="schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="600" WindowStyle="SingleBorderWindow">
     <!--Контекст для пробы MVVM-->
@@ -20,17 +21,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-        <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" Command="" ToolTip="Открыть">
+        <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Открыть" Command="{Binding OpenFile}">
             <DockPanel>
                     <Image Source="/Resourse/OpenFile.png" Width="25"/>
             </DockPanel>
         </Button>
-        <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left" Width="29" ToolTip="Сохранить">
+        <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left" Width="29" ToolTip="Сохранить" Command="{Binding SaveFile}">
                 <DockPanel>
                     <Image Source="/Resourse/SaveFile.png" Width="25" Stretch="Fill"/>
                 </DockPanel>
             </Button>
-        <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Импорт.">
+        <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Импорт." Command="{Binding ImportFile}">
                 <DockPanel>
                     <Image Source="/Resourse/ImportFile.png" Width="25"/>
                 </DockPanel>
@@ -118,16 +119,25 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <GroupBox Margin="5" Header="Группа" BorderThickness="1" Grid.Column="0">
-                                <Image Source="{Binding FlagNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25" 
+                                <Button >
+                                    <DockPanel>
+                                        <Image Source="{Binding FlagNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="23" Height="23" 
                                        ToolTip="{Binding FlagNote.Name}">
-                                    <Image.ContextMenu>
-                                        <ContextMenu ItemsSource="{Binding Source={local:EnumExtension {x:Type Str:ERepite}}}" />
-                                    </Image.ContextMenu>
-                                </Image>
+                                            <Image.ContextMenu>
+                                                <ContextMenu Name="GroupMenu" ItemsSource="{Binding Source={local:EnumExtension {x:Type Str:ERepite}}}"/>
+                                            </Image.ContextMenu>
+                                        </Image>
+                                    </DockPanel>
+                                    
+                                </Button>
                             </GroupBox>
                             <GroupBox Margin="5" Header="Приоритет" BorderThickness="1" Grid.Column="1">
-                                <Image Source="{Binding PriorityNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="25" Height="25" 
-                                       ToolTip="{Binding PriorityNote.Name}"/>
+                                <Button>
+                                    <DockPanel>
+                                        <Image Source="{Binding PriorityNote.Image, UpdateSourceTrigger=PropertyChanged}" Width="23" Height="23" 
+                                                ToolTip="{Binding PriorityNote.Name}"/>
+                                    </DockPanel>
+                                </Button>
                             </GroupBox>
                         </Grid>
 
