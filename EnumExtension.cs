@@ -15,7 +15,7 @@ namespace HomeWork_7
         public EnumExtension(Type enumType)  //Конструктор класса
         {
             if (!enumType.IsEnum || enumType is null)  //проверка что не null и является Enum
-                throw new Exception("Not Enum or is null");  //Выбрасывем ошибку.
+                throw new Exception("Не Enum или является null");  //Выбрасывем ошибку.
 
             EnumType = enumType;
         }

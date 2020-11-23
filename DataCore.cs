@@ -25,13 +25,26 @@ namespace HomeWork_7
         private CommandForm _saveFile;
         private CommandForm _saveNote;
         private CommandForm _contextSelected;
+        private CommandForm _importFileToDate;
 
+        public DateTime StartSelectDate { get; set; }
+        public DateTime EndSelectDate { get; set; }
+        public ObservableCollection<SNote> Notes { get; set; } = new ObservableCollection<SNote>();  //Коллекция заметок
         public event PropertyChangedEventHandler PropertyChanged;  //Проперти событий для MVVM
-
         private SNote _SelectedNote;  //Будем записывать выделенный элемент
+        private int _SelectedNoteIndex;  //Будем записывать выделенный элемент
 
-        public ObservableCollection<SNote> Notes { get; set; }  //Коллекция заметок
 
+        //Метод определения выделенной заметки.
+        public int SelectedNoteIndex
+        {
+            get { return _SelectedNoteIndex; }
+            set
+            {
+                _SelectedNoteIndex = value;
+                OnPropertyChanged("SelectedNote");
+            }
+        }
         //Метод определения выделенной заметки.
         public SNote SelectedNote
         {
@@ -42,6 +55,8 @@ namespace HomeWork_7
                 OnPropertyChanged("SelectedNote");
             }
         }
+
+        
 
         //Добавить заметку. Команда.
         public CommandForm AddNote
@@ -83,50 +98,41 @@ namespace HomeWork_7
                 return _importFile ?? (_importFile = new CommandForm(obj => { importFile(); })); //Возврращаем либо null либо метод для выполнения
             }
         }
-
-
-
-        /// <summary>
-        /// Тестовые данные.
-        /// </summary>
-        public DataCore()
+        //Сохранение заметки. Комманда.
+        public CommandForm SaveNote
         {
-            Notes = new ObservableCollection<SNote>
+            get
             {
-                new SNote("Первая заметка","Какой-то текст 1",TimeSpan.FromMinutes(30),DateTime.Now),
-                new SNote("Вторая заметка","Какой-то текст 2",TimeSpan.FromMinutes(30),DateTime.Now,Struct.ERepite.Ежеквартально),
-                new SNote("Третья заметка","Какой-то текст 3",TimeSpan.FromMinutes(30),DateTime.Now,Struct.ERepite.Никогда,EFlag.Личные, EPriority.Высокий),
-                new SNote("Четвертая заметка","Какой-то текст 4",TimeSpan.FromMinutes(30),DateTime.Now,Struct.ERepite.Ежегодно,EFlag.Работа, EPriority.Средний),
-                new SNote("Пятая заметка","Какой-то текст 5",TimeSpan.FromMinutes(30),DateTime.Now,Struct.ERepite.Ежедневно,EFlag.Личные, EPriority.Низкий),
-                new SNote("Шестая заметка","Какой-то текст 6",TimeSpan.FromMinutes(30),DateTime.Now,Struct.ERepite.Ежемесячно,EFlag.Избранные, EPriority.Высокий),
-                new SNote("Седьмая заметка","Какой-то текст 7",TimeSpan.FromMinutes(30),DateTime.Now,Struct.ERepite.Никогда,EFlag.Личные, EPriority.Средний),
-                new SNote("Восьмая заметка","Какой-то текст 8",TimeSpan.FromMinutes(30),DateTime.Now),
-                new SNote("Девятая заметка","Какой-то текст 9",TimeSpan.FromMinutes(30),DateTime.Now),
-                new SNote("Десятая заметка","Какой-то текст 10",TimeSpan.FromMinutes(30),DateTime.Now)
-            };
+                return _saveNote ?? (_saveNote = new CommandForm(obj => { saveNote(); })); //Возврращаем либо null либо метод для выполнения
+            }
+        }
+        //Импорт по датам.Комманда.
+        public CommandForm ImportFromDate
+        {
+            get
+            {
+                return _importFileToDate ?? (_importFileToDate = new CommandForm(obj => { importFileToDate(); })); //Возврращаем либо null либо метод для выполнения
+            }
         }
 
-       
+
 
 
         //Метод добовления заметки.
         private void addNote()
         {
+            if (Notes == null)
+                Notes = new ObservableCollection<SNote>();
             Notes.Add(new SNote("Введите название заметки", "Описание заметки", TimeSpan.FromMinutes(30), DateTime.Now)); ///костыль т.к. видать не очень хорошо продумал модель данных. Да и чеез стуктуы станно это делать.
         }
 
         //Удаление заметки. 
         private void removeNote()
         {
-            //Я не знаю какого не работает Notes.Remove(SelectedNote); так то костылим.
-            foreach (var note in Notes)
-            {
-                if (note.ID == SelectedNote.ID)
-                {
-                    Notes.Remove(note);
-                    break;
-                }
-            }
+            if (Notes.Count <= 0)  //если заметок нет, то просто возвращаемся.
+                return;
+
+            Notes.RemoveAt(SelectedNoteIndex);  //Удаляем по индексу
             SelectedNote = new SNote();
         }
 
@@ -138,10 +144,11 @@ namespace HomeWork_7
             openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;       //Указываем деректоию прогаммы.
 
             
-            if (openFileDialog.ShowDialog().GetValueOrDefault(false)) //Повека что указан файл который надо пррочитать.
+            if (openFileDialog.ShowDialog().GetValueOrDefault(false)) //Повека что указан файл который надо прочитать.
             {
-                Notes.Clear();                    //Т.к. откытие файла то надо очистить сначала.
-                LoadFromFile(openFileDialog.FileName);
+                if (Notes.Count > 0)
+                    Notes.Clear();                   //Т.к. откытие файла то надо очистить сначала.
+                LoadFromFile(openFileDialog.FileName);   //Добовляем в колллекцию список поллученный из файла.
             }
 
         }
@@ -163,19 +170,44 @@ namespace HomeWork_7
             openFileDialog.Filter = "\"Файлы pзаметок (*.ndb)|*.ndb;\"";             //Делаем фильтр по файлу
             openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;       //Указываем деректоию прогаммы.
 
-            if (openFileDialog.ShowDialog().GetValueOrDefault(false)) //Повека что указан файл который надо пррочитать.
+            if (openFileDialog.ShowDialog().GetValueOrDefault(false)) //Повека что указан файл который надо прочитать.
             {
-                LoadFromFile(openFileDialog.FileName);               //А можно напямую сделать.
+                LoadFromFile(openFileDialog.FileName);       //Сделано через откытие файла. Что бы не громаздить метот импорта.       
             }
+
         }
 
+        //TODO:
         //Импорт из файла по дате
         private void importFileToDate()
         {
+            SelectedDate sd = new SelectedDate();
+            sd.ShowDialog();
 
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "\"Файлы pзаметок (*.ndb)|*.ndb;\"";             //Делаем фильтр по файлу
+            openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;       //Указываем деректоию прогаммы.
+
+
+            if (openFileDialog.ShowDialog().GetValueOrDefault(false)) //Повека что указан файл который надо прочитать.
+            {
+                //LoadFromFileFromDate(openFileDialog.FileName,);
+            }
         }
 
+        //TODO:
+        //Сохранения текущей заметки.
+        private void saveNote()
+        {
+            for (int iter = 0; iter < Notes.Count;iter++)
+            {
+                if(Notes[iter].ID == SelectedNote.ID)
+                {
+                   // Notes[iter].Duration = SelectedNote.Duration;
 
+                }
+            }
+        }
 
 
         //Честно скопированный из интернета код.
@@ -228,15 +260,42 @@ namespace HomeWork_7
             }
         }
 
-        /*private ObservableCollection<SNote> ImportFromFile(string FileName, DateTime startFilter, DateTime stopFilter, bool FilterOn )
+        /// <summary>
+        /// Импорт из файла с фильтром по дате.
+        /// </summary>
+        /// <param name="FileName">Указать путь к файлу.</param>
+        /// <param name="startDate">Дата начала фильтра</param>
+        /// <param name="endDate">Дата оканчания фильтра.</param>
+        private void LoadFromFileFromDate(string FileName,DateTime startDate, DateTime endDate)
         {
+            string[] NoteLines = File.ReadAllLines(FileName);  //Получаем все строки из файла
+            for (int index = 0; index < NoteLines.Length; index++)
+            {
+                string[] noteString = NoteLines[index].Split(';');
+                //Проверка на глупость.Если менее 4 пааметров то выдаем сообщение и пропускаем.
+                if (noteString.Length < 7)
+                {
+                    MessageBox.Show("Найдена запись не соответствующая заметке.");
+                    continue;
+                }
+                // проверяем что заметкка Входит в диапозон дат. 
+                if (DateTime.Parse(noteString[3]) > startDate && DateTime.Parse(noteString[3]) < endDate)  
+                {
+                    //Если попадаетв диапозон то добовляем заметку.
+                    Notes.Add(new SNote(noteString[0], noteString[1], TimeSpan.Parse(noteString[2]), DateTime.Parse(noteString[3]),
+                          (ERepite)Enum.Parse(typeof(ERepite), noteString[4], true),                     //Очень странный на мой взгляд парсинг Enum.
+                          (EFlag)Enum.Parse(typeof(EFlag), noteString[5], true),
+                          (EPriority)Enum.Parse(typeof(EPriority), noteString[6], true)));
+                }
+            }
+        }
 
-            return notes;
-        }*/
-
+        /// <summary>
+        /// Парсинг файла и добовлление к коллекции.
+        /// </summary>
+        /// <param name="FileName">Указать путь к файлу.</param>
         private void LoadFromFile(string FileName)
         {
-            //var resoult = notes;
             string[] NoteLines = File.ReadAllLines(FileName);
             for(int index = 0;index < NoteLines.Length;index++ )
             {
@@ -247,12 +306,12 @@ namespace HomeWork_7
                     MessageBox.Show("Найдена запись не соответствующая заметке.");
                     continue;
                 }
+                //Добовляем заметку.
                 Notes.Add(new SNote(noteString[0], noteString[1],TimeSpan.Parse(noteString[2]),DateTime.Parse(noteString[3]),
                     (ERepite)Enum.Parse(typeof(ERepite), noteString[4], true),                     //Очень странный на мой взгляд парсинг Enum.
                     (EFlag)Enum.Parse(typeof(EFlag), noteString[5], true) ,
                     (EPriority)Enum.Parse(typeof(EPriority), noteString[6], true)));
             }
-            //return resoult;
         }
     }
 }

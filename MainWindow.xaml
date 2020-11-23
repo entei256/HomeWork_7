@@ -1,4 +1,4 @@
-﻿<Window x:Class="HomeWork_7.MainWindow"
+﻿<Window x:Name="window" x:Class="HomeWork_7.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,42 +12,46 @@
     <Window.DataContext>
         <local:DataCore/>
     </Window.DataContext>
-    
-    
-    
+
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-        <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Открыть" Command="{Binding OpenFile}">
-            <DockPanel>
+            <Button x:Name="LoadButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Открыть" Command="{Binding OpenFile}">
+                <DockPanel>
                     <Image Source="/Resourse/OpenFile.png" Width="25"/>
-            </DockPanel>
-        </Button>
-        <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left" Width="29" ToolTip="Сохранить" Command="{Binding SaveFile}">
+                </DockPanel>
+            </Button>
+            <Button x:Name="SaveButton" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left" Width="29" ToolTip="Сохранить" Command="{Binding SaveFile}">
                 <DockPanel>
                     <Image Source="/Resourse/SaveFile.png" Width="25" Stretch="Fill"/>
                 </DockPanel>
             </Button>
-        <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Импорт." Command="{Binding ImportFile}">
+            <Button x:Name="ImportButton" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,3,3,3" ToolTip="Импорт." Command="{Binding ImportFile}">
                 <DockPanel>
                     <Image Source="/Resourse/ImportFile.png" Width="25"/>
                 </DockPanel>
             </Button>
-        <Button x:Name="ImportButton_Copy" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
+
+
+
+            <Button x:Name="FilterFromProperty" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
                 <DockPanel>
                     <Image Source="/Resourse/Filter.png" Width="25" ToolTip="Фильтры по полям."/>
                 </DockPanel>
             </Button>
-        <Button x:Name="ImportButton_Copy1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" ToolTip="Фильтр диапозона дат.">
-            <DockPanel>
+            <Button x:Name="FilterFromDate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" ToolTip="Фильтр диапозона дат.">
+                <DockPanel>
                     <Image Source="/Resourse/Calendar.png" Width="25"/>
-            </DockPanel>
-        </Button>
+                </DockPanel>
+            </Button>
+
         </StackPanel>
-        
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,10,0" ToolTip="Добавить заметку."
                      Command="{Binding AddNote}">
@@ -62,7 +66,7 @@
                 </DockPanel>
             </Button>
         </StackPanel>
-        
+
         <Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Margin="1,1,1,1">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -70,7 +74,8 @@
                     <ColumnDefinition Width="400*"/>
                 </Grid.ColumnDefinitions>
                 <Border BorderThickness="1" Margin="1,1,1,1" >
-                    <ListBox x:Name="NotesListView" Margin="5,5,5,5" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}" HorizontalAlignment="Stretch">
+                    <ListBox x:Name="NotesListView" Margin="5,5,5,5" ItemsSource="{Binding Notes}" SelectedItem="{Binding SelectedNote}" HorizontalAlignment="Stretch"
+                             SelectedIndex="{Binding SelectedNoteIndex}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel>
@@ -101,8 +106,8 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
                 </Border>
-                
-                
+
+
                 <Border BorderThickness="1" Margin="6,6,6,6" Grid.Column="1" BorderBrush="Gray">
                     <Grid DataContext="{Binding SelectedNote}">
                         <Grid.RowDefinitions>
@@ -128,7 +133,7 @@
                                             </Image.ContextMenu>
                                         </Image>
                                     </DockPanel>
-                                    
+
                                 </Button>
                             </GroupBox>
                             <GroupBox Margin="5" Header="Приоритет" BorderThickness="1" Grid.Column="1">
@@ -161,14 +166,13 @@
                                     <ComboBox ItemsSource="{Binding Source={local:EnumExtension {x:Type Str:ERepite}}}" FontSize="9" SelectedItem="{Binding RepiteNote.Name}"/>
                                 </GroupBox>
                             </DockPanel>
-                            <Button x:Name="Save" Content="Сохранить" Grid.Column="3" FontSize="10" Command="{Binding SaveNoteCommand}"/>
+                            <Button x:Name="Save" Content="Сохранить" Grid.Column="3" FontSize="10" DataContext="{Binding DataContext, ElementName=window}" Command="{Binding SaveNote, Mode=OneWay}"/>
                         </Grid>
                     </Grid>
                 </Border>
 
             </Grid>
         </Border>
-        
-        
     </Grid>
+
 </Window>
