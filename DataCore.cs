@@ -27,8 +27,8 @@ namespace HomeWork_7
         private CommandForm _contextSelected;
         private CommandForm _importFileToDate;
 
-        public DateTime StartSelectDate { get; set; }
-        public DateTime EndSelectDate { get; set; }
+        static public DateTime StartSelectDate { get; set; }
+        static public DateTime EndSelectDate { get; set; }
         public ObservableCollection<SNote> Notes { get; set; } = new ObservableCollection<SNote>();  //Коллекция заметок
         public event PropertyChangedEventHandler PropertyChanged;  //Проперти событий для MVVM
         private SNote _SelectedNote;  //Будем записывать выделенный элемент
@@ -177,7 +177,7 @@ namespace HomeWork_7
 
         }
 
-        //TODO:
+        
         //Импорт из файла по дате
         private void importFileToDate()
         {
@@ -191,7 +191,7 @@ namespace HomeWork_7
 
             if (openFileDialog.ShowDialog().GetValueOrDefault(false)) //Повека что указан файл который надо прочитать.
             {
-                //LoadFromFileFromDate(openFileDialog.FileName,);
+                LoadFromFileFromDate(openFileDialog.FileName,StartSelectDate,EndSelectDate);
             }
         }
 

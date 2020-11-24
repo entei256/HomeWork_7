@@ -37,7 +37,11 @@
                 </DockPanel>
             </Button>
 
-
+            <Button x:Name="ImportFromDate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Command="{Binding ImportFromDate}">
+                <DockPanel>
+                    <Image Source="/Resourse/ImportFile.png" Width="25" ToolTip="Импорт по датам."/>
+                </DockPanel>
+            </Button>
 
             <Button x:Name="FilterFromProperty" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
                 <DockPanel>

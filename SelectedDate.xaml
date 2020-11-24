@@ -11,10 +11,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Calendar Grid.Row="0" SelectionMode="SingleRange"/>
+        <Calendar Grid.Row="0" SelectionMode="SingleRange" x:Name="SelectedCal"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Name="Ok" Content="Подтвердить" Margin="5"/>
-            <Button Name="Cancel" Content="Закрыть" Margin="5"/>
+            <Button Name="Ok" Content="Подтвердить" Margin="5" Click="Ok_Click"/>
+            <Button Name="Cancel" Content="Закрыть" Margin="5" Click="Cancel_Click"/>
         </StackPanel>
     </Grid>
 </Window>
