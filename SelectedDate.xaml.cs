@@ -18,6 +18,7 @@ namespace HomeWork_7
     /// </summary>
     public partial class SelectedDate : Window
     {
+        public bool ClosedForm { get; set; } = false;
         public SelectedDate()
         {
             InitializeComponent();
@@ -34,6 +35,7 @@ namespace HomeWork_7
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            ClosedForm = true;
             this.Close(); //закрываем форму.
         }
     }

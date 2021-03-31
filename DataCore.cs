@@ -17,6 +17,8 @@ namespace HomeWork_7
     /// </summary>
     class DataCore : INotifyPropertyChanged
     {
+        public string TestDescription { get; set; }
+
         private CommandForm _addNote;
         private CommandForm _removeNote;
         private CommandForm _filterDate;
@@ -56,7 +58,10 @@ namespace HomeWork_7
             }
         }
 
-        
+
+
+
+
 
         //Добавить заметку. Команда.
         public CommandForm AddNote
@@ -118,6 +123,8 @@ namespace HomeWork_7
 
 
 
+
+
         //Метод добовления заметки.
         private void addNote()
         {
@@ -131,12 +138,14 @@ namespace HomeWork_7
         {
             if (Notes.Count <= 0)  //если заметок нет, то просто возвращаемся.
                 return;
-
-            Notes.RemoveAt(SelectedNoteIndex);  //Удаляем по индексу
-            SelectedNote = new SNote();
+            if (SelectedNoteIndex >= 0)  //Фикс бага при нажатии "Удалить" 2 аза подряд.
+            {
+                Notes.RemoveAt(SelectedNoteIndex);  //Удаляем по индексу
+                SelectedNote = new SNote();
+            }
         }
 
-        //Открытть файл
+        //Открыть файл
         private void openFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();        
@@ -177,17 +186,17 @@ namespace HomeWork_7
 
         }
 
-        
         //Импорт из файла по дате
         private void importFileToDate()
         {
             SelectedDate sd = new SelectedDate();
             sd.ShowDialog();
 
+            if (sd.ClosedForm) return; //Если просто закрыли форму то ни чего не делаем. 
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "\"Файлы pзаметок (*.ndb)|*.ndb;\"";             //Делаем фильтр по файлу
             openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;       //Указываем деректоию прогаммы.
-
 
             if (openFileDialog.ShowDialog().GetValueOrDefault(false)) //Повека что указан файл который надо прочитать.
             {
@@ -199,14 +208,12 @@ namespace HomeWork_7
         //Сохранения текущей заметки.
         private void saveNote()
         {
-            for (int iter = 0; iter < Notes.Count;iter++)
-            {
-                if(Notes[iter].ID == SelectedNote.ID)
-                {
-                   // Notes[iter].Duration = SelectedNote.Duration;
+            
 
-                }
-            }
+            int index = SelectedNoteIndex;
+            var s = Notes[index];
+            Notes[index] = SelectedNote;
+
         }
 
 
@@ -216,10 +223,6 @@ namespace HomeWork_7
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-
-
-
-
 
 
 
@@ -300,7 +303,7 @@ namespace HomeWork_7
             for(int index = 0;index < NoteLines.Length;index++ )
             {
                 string[] noteString = NoteLines[index].Split(';');
-                //Проверка на глупость.Если менее 4 пааметров то выдаем сообщение и пропускаем.
+                //Проверка на глупость.Если менее 7 пааметров то выдаем сообщение и пропускаем.
                 if (noteString.Length < 7) 
                 {
                     MessageBox.Show("Найдена запись не соответствующая заметке.");
